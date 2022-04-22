@@ -4,18 +4,26 @@ namespace Hangman
 {
     internal class Program
     {
+        static int left = 3;
+
         static void Main(string[] args)
         {
+            //Instantiating different objects 
             string word, guess, AllLetters = "";
-            //char letter;
-            //char letter;
+            bool win = false, lose = false;
+            int count = 0;
 
+            //Title of game 
+            Console.SetCursorPosition(left, 2);
             Console.WriteLine("Welcome to Hangman");
-            Console.WriteLine("");
 
+            //Calls the main background graphic
+            Tools.graphics();
+
+            //calls for a random word
             word = Tools.Word();
-            word = word.ToUpper();
-
+            
+            //Creats a list and fills it with _ maching the words length
             List<string> guessedWords = new List<string>();
             for (int i = 0; i < word.Length; i++)
             {
@@ -23,24 +31,26 @@ namespace Hangman
                 guessedWords.Add(filler);
             }
 
-            bool win = false, lose = false;
-            int count = 0;
-
             do
             {
-                Console.WriteLine("");
+                //input graphic
+                Console.SetCursorPosition(left, 11);
                 Console.Write("Indtast bogstav: ");
 
-                ConsoleKeyInfo letter;
-                letter = Console.ReadKey(true);
-                guess = Convert.ToString(letter.Key);
-                //guess = Console.ReadLine();
-                guess = guess.ToUpper();
-                Console.WriteLine("");
-                AllLetters = AllLetters + guess + " ";
-                Console.WriteLine(AllLetters);
+                do
+                {
+                    //you press a key and it makes it your guess
+                    ConsoleKeyInfo letter;
+                    letter = Console.ReadKey(true);
+                    guess = Convert.ToString(letter.Key);
+                    guess = guess.ToUpper();
 
-                //bool win = false,lose = false;
+                }while(guess.Length != 1);
+
+                AllLetters = AllLetters + guess + " ";
+
+                Console.SetCursorPosition(left, 9);
+                Console.WriteLine(AllLetters);
 
                 if (word.Contains(guess))
                 {
@@ -52,31 +62,31 @@ namespace Hangman
                     lose = Tools.Mistake(count);
                 }
 
+                Console.SetCursorPosition(left, 5);
                 foreach (var item in guessedWords)
                 {
                     Console.Write(item);
                 }
-                
+
 
             } while (win == false && lose == false);
 
+            Console.SetCursorPosition(left, 13);
             if (win == true)
             {
-                Console.WriteLine("Winner");
+                Console.WriteLine("You Win");
             }
-            else if(lose == true)
+            else if (lose == true)
             {
-                Console.WriteLine("Loser");
+                Console.WriteLine("You Lose");
+                Console.SetCursorPosition(left, 15);
+                Console.WriteLine($"The word was {word}");
             }
             else
             {
                 Console.WriteLine("Game Broke");
             }
-            
-            //ConsoleKeyInfo letter;
-            //letter = Console.ReadKey(true);
-            //if(word.Contains(letter.Key))
-            //if (Cho.Key == ConsoleKey.P);
+
         }
     }
 }
