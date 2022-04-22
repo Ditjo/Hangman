@@ -45,38 +45,42 @@ namespace Hangman
                     guess = Convert.ToString(letter.Key);
                     guess = guess.ToUpper();
 
+                    //Only keys that are one charactor long is allowed
                 }while(guess.Length != 1);
 
                 AllLetters = AllLetters + guess + " ";
-
+                //All letters guessed so far is written out
                 Console.SetCursorPosition(left, 9);
                 Console.WriteLine(AllLetters);
 
+                //if the word contains the letter, run correct
                 if (word.Contains(guess))
                 {
                     win = Tools.Correct(word, guess, guessedWords);
                 }
+                //else, run mistake
                 else
                 {
                     count++;
                     lose = Tools.Mistake(count);
                 }
-
+                //show progress
                 Console.SetCursorPosition(left, 5);
                 foreach (var item in guessedWords)
                 {
                     Console.Write(item);
                 }
 
-
+                //if win or lose is set to true it ends loop
             } while (win == false && lose == false);
 
             Console.SetCursorPosition(left, 13);
+            //You have won or lost the game
             if (win == true)
             {
                 Console.WriteLine("You Win");
             }
-            else if (lose == true)
+            else if(lose == true)
             {
                 Console.WriteLine("You Lose");
                 Console.SetCursorPosition(left, 15);
